@@ -1,0 +1,104 @@
+# Все команды выполняются в PowerShell
+# Скачивание и установка Chocolatey
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+choco install vscode -y
+choco install docker-desktop -y
+choco install pycharm-community -y
+choco install git -y
+choco install github-desktop -y
+choco install maxima -y
+choco install knime -y
+choco install gimp -y
+choco install julia -y
+choco install python -y
+choco install rust -y
+choco install msys2 -y
+choco install zettlr -y
+choco install miktex -y
+choco install texstudio -y
+choco install anaconda3 -y
+choco install far -y
+choco install sumatrapdf -y
+choco install googlechrome -y
+choco install flameshot -y
+choco install qalculate -y
+choco install vlc -y
+choco install 7zip -y
+choco install firefox -y
+choco install notepadplusplus -y
+
+# Дополнительно: Установка WSL 2
+
+wsl --install -d Ubuntu-22.04
+
+# Скачивание и установка Yandex Browser
+
+$yandexUrl = "https://browser.yandex.ru/download/?banerid=0500000000"
+$yandexInstaller = "$env:TEMP\yandex-setup.exe"
+Invoke-WebRequest -Uri $yandexUrl -OutFile $yandexInstaller
+Start-Process $yandexInstaller -ArgumentList '/silent' -Wait
+Remove-Item $yandexInstaller
+
+# Скачивание и установка Arc Browser
+
+$arcUrl = "https://releases.arc.net/windows/ArcInstaller.exe"
+$arcInstaller = "$env:TEMP\arc-setup.exe"
+Invoke-WebRequest -Uri $arcUrl -OutFile $arcInstaller
+Start-Process $arcInstaller -ArgumentList '/S' -Wait
+Remove-Item $arcInstaller
+
+# Скачивание и установка Yandex.Telemost
+
+$telemostUrl = "https://telemost.yandex.ru/download-desktop"
+$telemostInstaller = "$env:TEMP\telemost-setup.exe"
+Invoke-WebRequest -Uri $telemostUrl -OutFile $telemostInstaller
+Start-Process $telemostInstaller -ArgumentList '/S' -Wait
+Remove-Item $telemostInstaller
+
+# Скачивание и установка Sber Jazz
+
+$jazzUrl = "https://dl.salutejazz.ru/desktop/latest/jazz.exe"
+$jazzInstaller = "$env:TEMP\jazz-setup.exe"
+Invoke-WebRequest -Uri $jazzUrl -OutFile $jazzInstaller
+Start-Process $jazzInstaller -ArgumentList '/S' -Wait
+Remove-Item $jazzInstaller
+
+# Скачивание и установка Языков для VS Code
+
+$vsCodePath = "C:\Program Files\Microsoft VS Code\bin"
+Start-Process powershell "-NoExit -File '$PSCommandPath' -argumentList 'continue'"
+# exit 
+
+# Если не открылся самостоятельно выполняем заново только последние две строки
+
+[string]$mode = "start"
+code --install-extension ms-python.python --install-extension ms-vscode.cpptools --install-extension ms-azuretools.vscode-docker --install-extension ms-vscode.vscode-typescript-next
+
+# Для 313 аудитории
+# Скачивание и установка Archi
+
+$ArchiUrl = "https://www.archimatetool.com/downloads/archi/5.4.1/Archi-Win64-Setup-5.4.1.exe"
+$ArchiInstaller = "$env:TEMP\Archi-Win64-Setup-5.4.1.exe"
+Invoke-WebRequest -Uri $ArchiUrl -OutFile $ArchiInstaller
+Start-Process $ArchiInstaller -ArgumentList '/S' -Wait
+Remove-Item $ArchiInstaller
+
+# Скачивание и установка Aris Express
+
+$arisUrl = "https://soft.mydiv.net/win/dlfile343972_c46d4-ARIS-Express.html/aris-express-setup.exe"
+$arisInstaller = "$env:TEMP\aris-express-setup.exe"
+Invoke-WebRequest -Uri $arisUrl -OutFile $arisInstaller
+Start-Process $arisInstaller -ArgumentList '/S' -Wait
+Remove-Item $arisInstaller
+
+# Скачивание и установка Ramus Educational скачивается только, если есть jvm
+
+$RamusUrl = "https://ramus-educational.software.informer.com/download/?ca41a7b"
+$RamusInstaller = "$env:TEMP\ramus-educational-1.1.1-setup.exe"
+Invoke-WebRequest -Uri $RamusUrl -OutFile $RamusInstaller
+Start-Process $RamusInstaller -ArgumentList '/S' -Wait
+Remove-Item $RamusInstaller 
+
+# Write-Host "Установка завершена."
