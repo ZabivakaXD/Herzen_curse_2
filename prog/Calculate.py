@@ -5,7 +5,7 @@ logging.basicConfig(filename='prog\Calculate.log', level=logging.INFO, format='%
 def log_decorator(func):
     """Decorate
     """
-    def wrapper(a, b, operand):
+    def wrapper(numbers, operand, tolerance):
         """Closure
 
         Логируется информация о том какие операнды и какая арифметическая операция собираются поступить на вход функции.
@@ -14,14 +14,14 @@ def log_decorator(func):
 
         Возвращает результат выражения
         """
-        logging.info(f'Вызов функции {func.__name__} с параметрами: a={a}, b={b}, operand="{operand}"')
-        result = func(a, b, operand)
+        logging.info(f'Вызов функции {func.__name__} с параметрами: numbers={*numbers}, operand="{operand}", tolerance={tolerance}')
+        result = func(numbers, operand, tolerance)
         logging.info(f'Результат выполнения функции {func.__name__}: {result}')
         return result
     return wrapper
 
 @log_decorator
-def calculate(a, b, operand):
+def calculate(numbers, operand, tolerance):
     """
     Функция для выполнения арифметических операций.
 
@@ -30,19 +30,63 @@ def calculate(a, b, operand):
 
     Результат является число
     """
+    if tolerance == "":
+        int_tolerance = 6
+    else: 
+        int_tolerance = convert_precision(float(tolerance))
+        
+    if int_tolerance == None:
+        return "Неправильный вид значения округления"
+    
+    result = None
     if operand == '+':
-        return a + b
+        result = 0
+        for number in numbers:
+            result += number
     elif operand == '-':
-        return a - b
+        result = 0
+        for number in numbers:
+            result -= number
     elif operand == '*':
-        return a * b
+        result = 0
+        for number in numbers:
+            result *= number
     elif operand == '/':
         if b != 0:
-            return a / b
+            result = 0
+        for number in numbers:
+            result /= number
         else: 
             return 'Нельзя делить на ноль'
-    else:
-        return 'Неизвестная операция'
+    elif operand == 'среднее значение':
+        result = sum(numbers)/len(numbers)
+    elif operand == 'дисперсия':
+        medium = sum(numbers)/len(numbers)
+        result = sum((xi - medium) ** 2 for xi in numbers) / len(results)
+    elif operand == 'стандартное отклонение':
+        medium = sum(numbers)/len(numbers)
+        result = (sum((xi - medium) ** 2 for xi in numbers) / (len(results) - 1))**0.5
+    elif operand == 'медиана':
+        mid = len(numbers)
+        if mid % 2 == 0:
+            result = (numbers[mid] + numbers[mid + 1]) / 2
+        else:
+            result = numbers[mid // 2 + 1]
+    
+    if result == None:
+        return "Неизвестная операция"
+    else: 
+        return round(result, int_tolerance)
+
+def convert_precision(tolerance):
+    import math
+    
+    int_tolerance = int(math.log10(tolerance))
+    
+    if tolerance == 10**int_tolerance and int_tolerance < 0:
+        return -int_tolerance
+    else: 
+        return None
 
 def main():
     """
@@ -52,10 +96,12 @@ def main():
     
     Выводит результат вычисления.
     """
-    a, operand, b = map(str, input("Введите выражение ").split())
-    print("Результат выражения ", calculate(int(a), int(b), operand))
+    numbers = list(map(int, str(input("Введите числа ")).split(" ")))
+    operand = str(input("Введите операцию "))
+    tolerance = str(input("Введите точность "))
+    print("Результат выражения ", calculate(numbers, operand, tolerance))
     
-#main()
+main()
 
 def test_calculate():
     assert calculate(1, 2, '+') == 3, 'dont work'
@@ -64,4 +110,4 @@ def test_calculate():
     assert calculate(1, 2, '*') == 2, 'dont work'
     assert calculate(1, 2, '-') == -1, 'dont work'
 
-test_calculate()
+#test_calculate()
