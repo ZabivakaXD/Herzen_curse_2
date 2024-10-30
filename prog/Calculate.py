@@ -67,10 +67,33 @@ def calculate(numbers, operand, tolerance):
         medium = sum(numbers)/len(numbers)
         result = (sum((xi - medium) ** 2 for xi in numbers) / (len(results) - 1))**0.5
     elif operand == 'медиана':
-        mid = len(numbers)
+        mid = len(numbers) // 2
+        sorted_numbers = sort(list(numbers))
         if mid % 2 == 0:
+            result = (sorted_numbers[mid] + sorted_numbers[mid + 1]) / 2
+        else:
+            result = sorted_numbers[mid // 2 + 1]
+    elif operand == 'первый квартиль':
+        mid = len(numbers) // 2
+        sorted_numbers = sort(list(numbers))
+        if mid % 2 == 0:
+            numbers = numbers[0:mid + 1]
+            mid = len(numbers) // 2
             result = (numbers[mid] + numbers[mid + 1]) / 2
         else:
+            numbers = numbers[0:mid + 1]
+            mid = len(numbers) // 2
+            result = numbers[mid + 1]
+    elif operand == 'третий квартиль':
+        mid = len(numbers) // 2
+        sorted_numbers = sort(list(numbers))
+        if mid % 2 == 0:
+            numbers = numbers[mid: -1]
+            mid = len(numbers) // 2
+            result = (numbers[mid] + numbers[mid + 1]) / 2
+        else:
+            numbers = numbers[mid: -1]
+            mid = len(numbers) // 2
             result = numbers[mid // 2 + 1]
     
     if result == None:
@@ -96,8 +119,8 @@ def main():
     
     Выводит результат вычисления.
     """
-    numbers = list(map(int, str(input("Введите числа ")).split(" ")))
-    operand = str(input("Введите операцию "))
+    numbers = list(map(int, input("Введите числа ")).split(" "))
+    operand = str(input("Введите арифметическая операцию "))
     tolerance = str(input("Введите точность "))
     print("Результат выражения ", calculate(numbers, operand, tolerance))
     
