@@ -1,3 +1,2 @@
-git rm --cached secrets.py
-rm 'secrets.py'
+secrets.py
 cabinetWork.py
