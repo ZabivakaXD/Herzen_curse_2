@@ -119,7 +119,7 @@ def main():
     
     Выводит результат вычисления.
     """
-    numbers = list(map(int, input("Введите числа ")).split(" "))
+    numbers = list(map(str, input("Введите числа ")).split(" "))
     operand = str(input("Введите арифметическая операцию "))
     tolerance = str(input("Введите точность "))
     print("Результат выражения ", calculate(numbers, operand, tolerance))
