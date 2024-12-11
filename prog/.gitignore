@@ -1,6 +1,8 @@
 secrets.py
 CabinetWork.py
 ComputationalMathematics.py
+ComputationalMathematics_another_try.py
+ComputationalMathematics_visual.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
