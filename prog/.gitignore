@@ -3,6 +3,8 @@ CabinetWork.py
 ComputationalMathematics.py
 ComputationalMathematics_another_try.py
 ComputationalMathematics_visual.py
+node_modules/
+jspm_packages/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
