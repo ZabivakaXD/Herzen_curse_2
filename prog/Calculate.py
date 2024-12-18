@@ -2,6 +2,25 @@ import logging
 
 logging.basicConfig(filename='prog\Calculate.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+class BatchCalculatorContextManager:
+    """
+    Менеджер контекста для работы с файлом, содержащим арифметические выражения.
+    Открывает и закрывает файл.
+    """
+    def __init__(self, file_path):
+        self.file_path = file_path  # Путь к файлу
+        self.file = None            # Объект файла
+
+    def __enter__(self):
+        # Открываем файл на чтение
+        self.file = open(self.file_path, 'r', encoding='utf-8')
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Закрываем файл
+        if self.file:
+            self.file.close()
+
 def log_decorator(func):
     """Decorate
     """
@@ -14,7 +33,7 @@ def log_decorator(func):
 
         Возвращает результат выражения
         """
-        logging.info(f'Вызов функции {func.__name__} с параметрами: numbers={*numbers}, operand="{operand}", tolerance={tolerance}')
+        logging.info(f'Вызов функции {func.__name__} с параметрами: numbers={numbers}, operand="{operand}", tolerance={tolerance}')
         result = func(numbers, operand, tolerance)
         logging.info(f'Результат выполнения функции {func.__name__}: {result}')
         return result
@@ -25,7 +44,7 @@ def calculate(numbers, operand, tolerance):
     """
     Функция для выполнения арифметических операций.
 
-    Функция получает два числа и арифметическую операцию.
+    Функция получает числа и арифметическую операцию.
     Определяет какая это из операций
 
     Результатом является число
@@ -44,18 +63,21 @@ def calculate(numbers, operand, tolerance):
         for number in numbers:
             result += number
     elif operand == '-':
-        result = 0
+        result = numbers[0]
+        numbers.pop(0)
         for number in numbers:
             result -= number
     elif operand == '*':
-        result = 0
+        result = numbers[0]
+        numbers.pop(0)
         for number in numbers:
             result *= number
     elif operand == '/':
-        if b != 0:
-            result = 0
-        for number in numbers:
-            result /= number
+        if 0 not in numbers:
+            result = numbers[0]
+            numbers.pop(0)
+            for number in numbers:
+                result /= number
         else: 
             return 'Нельзя делить на ноль'
     elif operand == 'среднее значение':
@@ -110,12 +132,19 @@ def convert_precision(tolerance):
         return -int_tolerance
     else: 
         return None
+    
+def expression_generator(file):
+    """
+    Генератор для построчного чтения и возврата арифметических выражений из файла.
+    """
+    for line in file:
+        yield line.strip()  # Убираем лишние пробелы и символы переноса строки
 
-def main():
+def cmd_read():
     """
     Главная функция для запуска калькулятора.
     
-    Запрашивает у пользователя ввод двух чисел и операции.
+    Запрашивает у пользователя ввод чисел и операции.
     
     Выводит результат вычисления.
     """
@@ -124,7 +153,40 @@ def main():
     tolerance = str(input("Введите точность "))
     print("Результат выражения ", calculate(numbers, operand, tolerance))
     
-main()
+def file_read():
+    """
+    Главная функция для запуска калькулятора.
+    
+    Читает из файла все выражения.
+    
+    Выводит результат вычисления.
+    """
+    file_path = "prog\expressions.txt"  # Имя файла с арифметическими выражениями
+    work_numbers = "0123456789"
+    work_opertand = "+ - * /"
+    
+    # Обрабатываем файл с помощью менеджера контекста и генератора
+    with BatchCalculatorContextManager(file_path) as file:
+        for expression in expression_generator(file):
+            number = ""
+            numbers = []
+            for char in expression:
+                if char in work_numbers:
+                    number += char
+                elif char == " ":
+                    next
+                elif char in work_opertand:
+                    operand = char
+                    numbers.append(int(number))
+                    number = ""
+                else:
+                    print("Неправильно записано выражение в файле")
+            numbers.append(int(number))
+            result = calculate(numbers, operand, "")
+            print(f"{expression} = {result}")
+
+file_read()
+#cmd_read()
 
 def test_calculate():
     assert calculate(1, 2, '+') == 3, 'dont work'
