@@ -5,6 +5,7 @@ ComputationalMathematics_another_try.py
 ComputationalMathematics_visual.py
 node_modules/
 jspm_packages/
+test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
