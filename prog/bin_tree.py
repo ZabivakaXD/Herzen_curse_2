@@ -6,6 +6,8 @@ def gen_bin_tree_rec(height = 3, root = 1):
         raise BinaryTreeArgumentException()
     elif height > 995 or height < 0:
         raise BinaryTreeRecursionException()
+    elif height == 0:
+        return [root]
     else:
         feed = {}
         left_leaf = root * 2
@@ -28,6 +30,8 @@ def gen_bin_tree_line(height = 3, root = 1):
         raise BinaryTreeMemoryException()
     elif height < 0:
         raise BinaryTreeIndexException()
+    elif height == 0:
+        return [root]
     else:
         numbers = [0] * (2**(height + 1) - 1)
         count = 0
@@ -44,8 +48,6 @@ def gen_bin_tree_line(height = 3, root = 1):
             lvl_up = numbers[2**(height_local - 1) - 1:len(numbers) - 2**height_local]
             numbers.reverse()
             del numbers[0:2**height_local + 2**(height_local - 1)]
-            # for deleter in range(0, 2**height_local + 2**(height_local - 1)):
-            #     numbers.pop(0)
             numbers.reverse()
             count = 0
             while count < len(lvl_up):
@@ -54,28 +56,6 @@ def gen_bin_tree_line(height = 3, root = 1):
             
     return numbers[0]
     
-class TestGenBinTreeRec(unittest.TestCase):
-    def test_valid_input(self):
-        self.assertEqual(gen_bin_tree_rec(height=3, root=1), {1: [{2: [{4: [8, 7]}, {5: [10, 8]}]}, {4: [{8: [16, 11]}, {7: [14, 10]}]}]})
-        self.assertEqual(gen_bin_tree_rec(height=1, root=5), {5: [10, 8]})
-        self.assertEqual(gen_bin_tree_rec(height=2, root=4), {4: [{8: [16, 11]}, {7: [14, 10]}]})
-
-    def test_invalid_height_type(self):
-        with self.assertRaises(BinaryTreeArgumentException):
-            gen_bin_tree_rec(height="3", root=1)
-
-    def test_invalid_root_type(self):
-        with self.assertRaises(BinaryTreeArgumentException):
-            gen_bin_tree_rec(height=3, root="1")
-
-    def test_height_too_large(self):
-        with self.assertRaises(BinaryTreeRecursionException):
-            gen_bin_tree_rec(height=996, root=1)
-
-    def test_negative_height(self):
-        with self.assertRaises(BinaryTreeRecursionException):
-            gen_bin_tree_rec(height=-1, root=1)
-
 def main():
     tree_rec = gen_bin_tree_rec()
     print(tree_rec)
@@ -83,5 +63,4 @@ def main():
     # print(tree_line)
     
 if __name__ == '__main__':
-    # main()
-    unittest.main()
+    main()

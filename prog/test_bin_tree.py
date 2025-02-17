@@ -1,5 +1,6 @@
 import unittest
 from bin_tree import gen_bin_tree_rec
+from exception_bin_tree import *
 
 class TestGenBinTreeRec(unittest.TestCase):
     def test_valid_input(self):
