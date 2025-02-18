@@ -4,7 +4,7 @@
 
 ### 3 семестр
 
-[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/Lab_1_sem_4.md)
+[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/lab-1_sem-4.md)
 
 ## [Программирование](https://github.com/ZabivakaXD/Herzen_curse_2/tree/main/prog)
 
