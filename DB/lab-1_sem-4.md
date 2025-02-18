@@ -91,6 +91,7 @@ INSERT INTO `` (`resumeid`,`userid`,`title`,`skills`,`created`) VALUES (2,2,'Goo
 INSERT INTO `` (`resumeid`,`userid`,`title`,`skills`,`created`) VALUES (3,3,'Yandex, Avito','Midddle-C++, junior-python','2025-02-11 19:46:10');
 ```
 Не существующий ID нельзя вписать будет ошибка.
+
 ![Задание 9](img/lab-1_img-1.png)
 ## Задача 10
 При удаление из users она удалит запись и из resume.
@@ -98,6 +99,7 @@ INSERT INTO `` (`resumeid`,`userid`,`title`,`skills`,`created`) VALUES (3,3,'Yan
 DELETE FROM `simpledb`.`users` WHERE (`id` = '3');
 ```
 ![Задание 10.1](img/lab-1_img-2.png)
+При обнавлении значения id в таблице users, обновится и значение userid в таблице resume
 ```
 UPDATE `simpledb`.`users` SET `id` = '5' WHERE (`id` = '2');
 ```
