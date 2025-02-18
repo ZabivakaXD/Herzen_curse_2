@@ -1,5 +1,11 @@
 # Репозиторий Болотова Константина Александровича 2 курс РГПУ Им.Герцена
 
+## [Базы Данных](https://github.com/ZabivakaXD/Herzen_curse_2/tree/main/DB)
+
+### 3 семестр
+
+[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/Lab_1_sem_4.md)
+
 ## [Программирование](https://github.com/ZabivakaXD/Herzen_curse_2/tree/main/prog)
 
 ### 3 семестр
