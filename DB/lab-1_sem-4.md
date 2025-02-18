@@ -91,8 +91,8 @@ INSERT INTO `` (`resumeid`,`userid`,`title`,`skills`,`created`) VALUES (2,2,'Goo
 INSERT INTO `` (`resumeid`,`userid`,`title`,`skills`,`created`) VALUES (3,3,'Yandex, Avito','Midddle-C++, junior-python','2025-02-11 19:46:10');
 ```
 Не существующий ID нельзя вписать, будет ошибка.
-
-![Задание 9](img/lab-1_img-1.png)
+<img src="img/lab-1" width="250" height="150">
+![Задание 9](img/lab-1_img-1.png=979738)
 ## Задача 10
 При удаление из users она удалит запись и из resume.
 ```
