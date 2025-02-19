@@ -5,6 +5,27 @@ MIN_REC_HEIGHT = 0
 MAX_LINE_HEIGHT = 31
 MIN_LINE_HEIGHT = 0
 
+def setup_data(n):
+    from random import randint
+    min_height = 0
+    max_height = 20
+    data = [None] * n 
+    for i in range(n):
+        data[i] = [i,randint(min_height, max_height)]
+    # example [0, 19, 20, 3, 100, 45, 34, 97, 8, 38]
+    return data
+
+def calculate_time(n, func):
+    import timeit
+    data = setup_data(n)
+    delta = 0
+    for n in data:
+        start_time = timeit.default_timer()
+        func(n)
+        delta += timeit.default_timer() - start_time
+
+    return delta
+
 def gen_bin_tree_rec(height: int, root: int, left_leaf = lambda x: x * 2, right_leaf = lambda x: x + 3):
     if type(height) is not int or type(root) is not int:
         raise BinaryTreeArgumentException()
@@ -61,10 +82,16 @@ def gen_bin_tree_line(height: int, root: int, left_leaf = lambda x: x * 2, right
     return numbers[0]
     
 def main():
-    tree_rec = gen_bin_tree_rec(3,1)
-    print(tree_rec)
-    tree_line = gen_bin_tree_line(3,1)
-    print(tree_line)
+    # tree_rec = gen_bin_tree_rec(3,1)
+    # print(tree_rec)
+    # tree_line = gen_bin_tree_line(3,1)
+    # print(tree_line)
+    import matplotlib.pyplot as plt
+    res = []
+    for n in range(1, 21, 2):
+        res.append(calculate_time(n, gen_bin_tree_rec))
+    plt.plot(res)
+    plt.show()
     
 if __name__ == '__main__':
     main()

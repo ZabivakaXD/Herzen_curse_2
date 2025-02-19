@@ -27,13 +27,16 @@ def gen_bin_tree(height=<number>, root=<number>):
    - Ловит ошибки в случае неправильнного ввода данных.
 
 ```
-def gen_bin_tree_rec(height = 3, root = 1):
+MAX_REC_HEIGHT = 995
+MIN_REC_HEIGHT = 0
+
+def gen_bin_tree_rec(height: int, root: int, left_leaf = lambda x: x * 2, right_leaf = lambda x: x + 3):
     if type(height) is not int or type(root) is not int:
         raise BinaryTreeArgumentException()
-    elif height > 995 or height < 0:
+    elif height > MAX_REC_HEIGHT or height < MIN_REC_HEIGHT:
         raise BinaryTreeRecursionException()
     elif height == 0:
-        return [root]
+        return {root:[]}
     else:
         feed = {}
         left_leaf = root * 2
@@ -49,23 +52,29 @@ def gen_bin_tree_rec(height = 3, root = 1):
 
     return feed
 ```
+Данная программа прошла все тесты:
 
-Функция gen_bin_tree_rec(height, root):
+![Img-1](img/lab-1_img-2.png)
+
+Функция gen_bin_tree_line(height, root):
    - Строит двоичое дерево линейным способом.
    - Принимает высоту дерева и значение корня.
    - Возвращает двоичное дерево в виде вложенных словарей.
    - Ловит ошибки в случае неправильнного ввода данных.
 
 ```
-def gen_bin_tree_line(height = 3, root = 1):
+MAX_LINE_HEIGHT = 31
+MIN_LINE_HEIGHT = 0
+
+def gen_bin_tree_line(height: int, root: int, left_leaf = lambda x: x * 2, right_leaf = lambda x: x + 3):
     if type(height) is not int or type(root) is not int:
         raise BinaryTreeArgumentException()
-    elif height > 31:
+    elif height > MAX_LINE_HEIGHT:
         raise BinaryTreeMemoryException()
-    elif height < 0:
+    elif height < MIN_LINE_HEIGHT:
         raise BinaryTreeIndexException()
     elif height == 0:
-        return [root]
+        return {root : []}
     else:
         numbers = [0] * (2**(height + 1) - 1)
         count = 0
@@ -90,5 +99,8 @@ def gen_bin_tree_line(height = 3, root = 1):
             
     return numbers[0]
 ```
+Данная программа прошла все тесты:
+
+![Img-2](img/lab-1_img-1.png)
 
 [Ссылка на файл](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/bin_tree.py)

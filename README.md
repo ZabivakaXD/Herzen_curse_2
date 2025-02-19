@@ -10,7 +10,7 @@
 
 ### 3 семестр
 
-[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Lab_1_sem_3.md)
+[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Lab-1_sem-3.md)
 
 [Лабораторная работа №2](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Calculate.py)
 
@@ -18,4 +18,4 @@
 
 ### 4 семестр
 
-[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Lab_1_sem_4.md)
+[Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Lab-1_sem-4.md)
