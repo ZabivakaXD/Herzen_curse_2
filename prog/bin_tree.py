@@ -14,14 +14,14 @@ def gen_bin_tree_rec(height: int, root: int, left_leaf = lambda x: x * 2, right_
         return {root:[]}
     else:
         feed = {}
-        left_leaf = root * 2
-        right_leaf = root + 3
+        # left_leaf = root * 2
+        # right_leaf = root + 3
         
         if height != 1:
-            left_branch = gen_bin_tree_rec(height - 1, left_leaf)
-            right_branch = gen_bin_tree_rec(height - 1, right_leaf)
+            left_branch = gen_bin_tree_rec(height - 1, left_leaf(root))
+            right_branch = gen_bin_tree_rec(height - 1, right_leaf(root))
         if height == 1:
-            feed[root] = [left_leaf, right_leaf]
+            feed[root] = [left_leaf(root), right_leaf(root)]
         else:
             feed[root] = [left_branch, right_branch]
 
@@ -63,8 +63,8 @@ def gen_bin_tree_line(height: int, root: int, left_leaf = lambda x: x * 2, right
 def main():
     tree_rec = gen_bin_tree_rec(3,1)
     print(tree_rec)
-    tree_line = gen_bin_tree_line(3,1)
-    print(tree_line)
+    # tree_line = gen_bin_tree_line(3,1)
+    # print(tree_line)
     
 if __name__ == '__main__':
     main()

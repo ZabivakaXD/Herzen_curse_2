@@ -11,7 +11,7 @@ def setup_data(n):
     max_height = 20
     data = [None] * n 
     for i in range(n):
-        data[i] = [i,randint(min_height, max_height)]
+        data[i] = randint(min_height, max_height)
     # example [0, 19, 20, 3, 100, 45, 34, 97, 8, 38]
     return data
 
@@ -21,7 +21,7 @@ def calculate_time(n, func):
     delta = 0
     for n in data:
         start_time = timeit.default_timer()
-        func(n)
+        func(n,1)
         delta += timeit.default_timer() - start_time
 
     return delta
@@ -82,13 +82,9 @@ def gen_bin_tree_line(height: int, root: int, left_leaf = lambda x: x * 2, right
     return numbers[0]
     
 def main():
-    # tree_rec = gen_bin_tree_rec(3,1)
-    # print(tree_rec)
-    # tree_line = gen_bin_tree_line(3,1)
-    # print(tree_line)
     import matplotlib.pyplot as plt
     res = []
-    for n in range(1, 21, 2):
+    for n in range(1, 22, 2):
         res.append(calculate_time(n, gen_bin_tree_rec))
     plt.plot(res)
     plt.show()

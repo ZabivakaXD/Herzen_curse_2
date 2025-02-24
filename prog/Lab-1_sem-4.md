@@ -20,7 +20,9 @@ def gen_bin_tree(height=<number>, root=<number>):
 Высота дерева (height) задается пользователем (индивидуально для студента).
 Левый (left leaf) и правый потомок (right leaf) вычисляется с использованием алгоритмов, индивидуальных для каждого студента в группе и приведен ниже.
 
-Функция gen_bin_tree_rec(height, root):
+## Решение
+
+Функция gen_bin_tree_rec(height: int, root: int, left_leaf = lambda x: x * 2, right_leaf = lambda x: x + 3):
    - Строит двоичое дерево рекурсивным способом.
    - Принимает высоту дерева и значение корня.
    - Возвращает двоичное дерево в виде вложенных словарей.
@@ -39,14 +41,12 @@ def gen_bin_tree_rec(height: int, root: int, left_leaf = lambda x: x * 2, right_
         return {root:[]}
     else:
         feed = {}
-        left_leaf = root * 2
-        right_leaf = root + 3
         
         if height != 1:
-            left_branch = gen_bin_tree_rec(height - 1, left_leaf)
-            right_branch = gen_bin_tree_rec(height - 1, right_leaf)
+            left_branch = gen_bin_tree_rec(height - 1, left_leaf(root))
+            right_branch = gen_bin_tree_rec(height - 1, right_leaf(root))
         if height == 1:
-            feed[root] = [left_leaf, right_leaf]
+            feed[root] = [left_leaf(root), right_leaf(root)]
         else:
             feed[root] = [left_branch, right_branch]
 
@@ -56,7 +56,7 @@ def gen_bin_tree_rec(height: int, root: int, left_leaf = lambda x: x * 2, right_
 
 ![Img-1](img/lab-1_img-2.png)
 
-Функция gen_bin_tree_line(height, root):
+Функция gen_bin_tree_line(height: int, root: int, left_leaf = lambda x: x * 2, right_leaf = lambda x: x + 3):
    - Строит двоичое дерево линейным способом.
    - Принимает высоту дерева и значение корня.
    - Возвращает двоичное дерево в виде вложенных словарей.
