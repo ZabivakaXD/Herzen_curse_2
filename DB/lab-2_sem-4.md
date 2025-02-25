@@ -1,108 +1,59 @@
-'''
--- MySQL Workbench Forward Engineering
+# Отчёт по БД лабораторная 2
+## Задание 1
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+Повторите действия, демонстрируемые в ролике и создайте диаграмму (модель), созданную во второй половине ролика. Экспортируйте модель в виде изображения, экспортируйте модель в виде SQL-скрипта. 
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
+В отчете требуется отобразить:
+- схему в виде изображения;
+- скопированный запрос, соответствующий созданию этой базы данных, вставьте его в какой-либо сервис для хранения фрагментов кода (gist), сгенерируйте публичную ссылку и вставьте её в отчёт;
+- фрагмент запроса, касающийся создания и настройки таблицы invoice.
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+Изображение диаграммы:
+![img-1](img/lab-2_first.png)
 
--- -----------------------------------------------------
--- Table `mydb`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `fio` VARCHAR(255) NOT NULL,
-  `login` VARCHAR(255) NULL,
-  `password` VARCHAR(255) NULL,
-  `e_mail` VARCHAR(255) NULL,
-  `type` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`, `fio`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE)
+[Ссылка на gist](https://gist.github.com/ZabivakaXD/f14d3e90d6f3ae34ce25fdb5f245eaee)
+
+Создание таблицы invoice:
+```
+CREATE TABLE IF NOT EXISTS `firstModel`.`invoice` (
+  `idinvoice` INT NOT NULL AUTO_INCREMENT,
+  `userid` INT NOT NULL,
+  `productsid` INT NOT NULL,
+  `cost` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`idinvoice`),
+  UNIQUE INDEX `idinvoice_UNIQUE` (`idinvoice` ASC) VISIBLE,
+  INDEX `key_userid_id_idx` (`userid` ASC) VISIBLE,
+  INDEX `key_productsid_idproducts_idx` (`productsid` ASC) VISIBLE,
+  CONSTRAINT `key_userid_id`
+    FOREIGN KEY (`userid`)
+    REFERENCES `firstModel`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `key_productsid_idproducts`
+    FOREIGN KEY (`productsid`)
+    REFERENCES `firstModel`.`products` (`idproducts`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
+```
 
+## Задание 2
 
--- -----------------------------------------------------
--- Table `mydb`.`settings`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`settings` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `host` VARCHAR(45) NULL,
-  `db` VARCHAR(45) NULL,
-  `user` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+Создайте собственную EER-диаграмму и спроектируйте БД с параметрами на основе текста, опубликованного по ссылке: [https://habr.com/ru/post/175985/](https://habr.com/ru/post/175985/)
 
+Экспортируйте полученную модель в виде изображения, экспортируйте модель в виде SQL-скрипта.
+В отчете требуется отобразить: 
+- схему в виде изображения;
+- скопированный запрос, соответствующий созданию этой базы данных, вставьте его в какой-либо сервис для хранения фрагментов кода (gist, Codepen), сгенерируйте публичную или секретную ссылку и вставьте её в отчёт;
+- фрагмент запроса, касающийся создания и настройки таблицы Orders.
 
--- -----------------------------------------------------
--- Table `mydb`.`shops`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`shops` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NULL,
-  `address` VARCHAR(255) NULL,
-  `tel` VARCHAR(100) NULL,
-  `site` VARCHAR(100) NULL,
-  `email` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
+Изображение диаграммы:
+![img-2](img/lab-2_second.png)
 
+[Ссылка на gist](https://gist.github.com/ZabivakaXD/823e07352fbf8ada23cdcae53b24d38f)
 
--- -----------------------------------------------------
--- Table `mydb`.`product_type`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`product_type` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`products`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`products` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `shop_id` INT NOT NULL,
-  `type_id` INT NOT NULL,
-  `brand` VARCHAR(255) NULL,
-  `model` VARCHAR(255) NULL,
-  `data` TINYTEXT NULL,
-  `img` VARCHAR(255) NULL,
-  `price` VARCHAR(45) NULL,
-  `warranty` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`, `shop_id`, `type_id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `product_to_type_idx` (`type_id` ASC) VISIBLE,
-  INDEX `shop_to_products_idx` (`shop_id` ASC) VISIBLE,
-  CONSTRAINT `product_to_type`
-    FOREIGN KEY (`type_id`)
-    REFERENCES `mydb`.`product_type` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `shop_to_products`
-    FOREIGN KEY (`shop_id`)
-    REFERENCES `mydb`.`shops` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`orders`
--- -----------------------------------------------------
+Создание таблицы Orders:
+```
 CREATE TABLE IF NOT EXISTS `mydb`.`orders` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `shop_id` INT NOT NULL,
@@ -120,48 +71,32 @@ CREATE TABLE IF NOT EXISTS `mydb`.`orders` (
   CONSTRAINT `orders_to_shops`
     FOREIGN KEY (`shop_id`)
     REFERENCES `mydb`.`shops` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `orders_to_products`
     FOREIGN KEY (`product_id`)
     REFERENCES `mydb`.`products` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fio_to_users`
     FOREIGN KEY (`fio`)
     REFERENCES `mydb`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`deliveries`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`deliveries` (
-  `order_id` INT NOT NULL AUTO_INCREMENT,
-  `fio` INT NOT NULL,
-  `address` VARCHAR(255) NULL,
-  `time` VARCHAR(45) NULL,
-  `date` DATE NULL,
-  `confirm` TINYINT(1) NULL,
-  PRIMARY KEY (`order_id`, `fio`),
-  UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
-  INDEX `fio_to_users_idx` (`fio` ASC) VISIBLE,
-  CONSTRAINT `deliveries_to_orders`
-    FOREIGN KEY (`order_id`)
-    REFERENCES `mydb`.`orders` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fio_to_users`
-    FOREIGN KEY (`fio`)
-    REFERENCES `mydb`.`users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 ```
+
+## Задание 3
+
+Выполните операцию Database - Forward Engineer и создайте базу данных на вашем сервере. Сделайте скриншот с успешным выполнением этого процесса и вставьте его в отчет. 
+
+Изображение БД с диаграммой:
+![img-3](img/lab-2_third.png)
+
+## Задание 4
+
+Добавьте несколько строк и новых атрибутов в каждую таблицу созданной базы данных. Попробуйте удалить связанные в нескольких таблицах данные, зафиксируйте, что произошло и опишите текстом (и по возможности дополните скриншотами) в отчёте.
+
+При удалении строки из таблицы Orders удалится строка и из Deliveres, потому что там есть ordersid, которого больше не сущетсвует.
+![img-4](img/lab-2_befor-deleat.png)
+![img-5](img/lab-2_after-deleat.png)
