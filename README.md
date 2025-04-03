@@ -12,7 +12,7 @@
 
 [Лабораторная работа №4](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/lab-4_sem-4.md)
 
-[Лабораторная работа №5](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/lab-4_sem-5.md)
+[Лабораторная работа №5](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/lab-5_sem-4.md)
 
 ## [Программирование](https://github.com/ZabivakaXD/Herzen_curse_2/tree/main/prog)
 
