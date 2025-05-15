@@ -2,7 +2,7 @@
 
 ## [Базы Данных](https://github.com/ZabivakaXD/Herzen_curse_2/tree/main/DB)
 
-### 3 семестр
+### 4 семестр
 
 [Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/lab-1_sem-4.md)
 
