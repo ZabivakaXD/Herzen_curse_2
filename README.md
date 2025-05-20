@@ -16,6 +16,8 @@
 
 [Самостоятельная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/SR-1_sem-4.md)
 
+[Самостоятельная работа №2](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/DB/SR-2_sem-4.md)
+
 ## [Программирование](https://github.com/ZabivakaXD/Herzen_curse_2/tree/main/prog)
 
 ### 3 семестр
