@@ -1,0 +1,13 @@
+[
+  {
+    "datetime": "2025-06-02 21:55:52",
+    "func_name": "f3",
+    "params": {
+      "args": [
+        30
+      ],
+      "kwargs": {}
+    },
+    "result": 27000
+  }
+]

@@ -2,59 +2,45 @@ import sys
 import functools
 import json
 import sqlite3
+from contextlib import contextmanager
 from datetime import datetime
 
-def trace(func=None, *, handle=sys.stdout):
+def deco(func=None, *, handle=sys.stdout):
     """
     Параметризованный декоратор для логирования вызовов функций.
     Варианты использования:
-    - @trace - логирование в консоль (по умолчанию)
-    - @trace(handle='logs.json') - логирование в JSON-файл
-    - @trace(handle=sqlite3.Connection) - логирование в SQLite базу
+    - @deco - логирование в консоль (по умолчанию)
+    - @deco(handle='logs.json') - логирование в JSON-файл
+    - @deco(handle=sqlite3.Connection) - логирование в SQLite базу
     """
     if func is None:
-        return lambda func: trace(func, handle=handle)
+        return lambda func: deco(func, handle=handle)
 
     @functools.wraps(func)
     def inner(*args, **kwargs):
-        # Вызываем функцию и получаем результат
-        result = func(*args, **kwargs)
-        
-        # Подготавливаем данные для логирования
-        log_data = {
-            'datetime': datetime.now().isoformat(),
-            'func_name': func.__name__,
-            'params': {
-                'args': args,
-                'kwargs': kwargs
-            },
-            'result': result
-        }
-        
-        # Логирование в зависимости от типа handle
-        if isinstance(handle, str) and handle.endswith('.json'):
-            # Логирование в JSON файл
-            try:
-                with open(handle, 'a+') as f:
-                    f.seek(0, 2)  # Перемещаемся в конец файла
-                    if f.tell() == 0:
+        try:
+            # Вызываем функцию и получаем результат
+            result = func(*args, **kwargs)
+            
+            # Подготавливаем данные для логирования
+            log_data = {
+                'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'func_name': func.__name__,
+                'params': {
+                    'args': args,
+                    'kwargs': kwargs
+                },
+                'result': result
+            }
+            
+            # Логирование в зависимости от типа handle
+            if isinstance(handle, str) and handle.endswith('.json'):
+                # Логирование в JSON файл
+                    with open(handle, 'a+') as f:
                         json.dump([log_data], f, indent=2)
-                    else:
-                        f.seek(0)
-                        try:
-                            data = json.load(f)
-                        except json.JSONDecodeError:
-                            data = []
-                        data.append(log_data)
-                        f.seek(0)
-                        f.truncate()
-                        json.dump(data, f, indent=2)
-            except Exception as e:
-                print(f"Error writing to JSON file: {e}", file=sys.stderr)
-        
-        elif isinstance(handle, sqlite3.Connection):
-            # Логирование в SQLite базу
-            try:
+                        f.write('\n')    
+            elif isinstance(handle, sqlite3.Connection):
+                # Логирование в SQLite базу
                 cur = handle.cursor()
                 # Создаем таблицу, если ее нет
                 cur.execute("""
@@ -77,21 +63,17 @@ def trace(func=None, *, handle=sys.stdout):
                     )
                 )
                 handle.commit()
-            except Exception as e:
-                print(f"Error writing to SQLite database: {e}", file=sys.stderr)
-        
-        else:
-            # Логирование в консоль (по умолчанию)
-            try:
+            else:
+                # Логирование в консоль (по умолчанию)
                 print(f"[{log_data['datetime']}] Function '{log_data['func_name']}' called with:", file=handle)
                 print(f"  Args: {log_data['params']['args']}", file=handle)
                 print(f"  Kwargs: {log_data['params']['kwargs']}", file=handle)
                 print(f"  Result: {log_data['result']}\n", file=handle)
-            except Exception as e:
-                print(f"Error writing to console: {e}", file=sys.stderr)
+            
+            return result
+        except Exception as e:
+            raise e
         
-        return result
-
     return inner
 
 def showlogs(con):
@@ -119,4 +101,49 @@ def showlogs(con):
             print("Result:", json.loads(result))
         print("\n=== END OF LOGS ===")
     except Exception as e:
-        print(f"Error reading logs from database: {e}", file=sys.stderr)
+            raise e
+
+@deco() # Default: Вариант по умолчанию
+def f2(x):
+    return x**2
+
+f2(20)
+
+@deco(handle='logger.json') # Default: Вариант по умолчанию
+def f3(x):
+    return x**3
+
+f3(30)
+
+db_con = sqlite3.connect(":memory:")
+
+@deco(handle=db_con)
+def f4(x):
+        return x ** 4
+
+f4(40)
+
+# Просмотр логов
+showlogs(db_con)
+
+# @contextmanager
+# def dbc():
+#     con = sqlite3.connect(':memory:')
+#     try:
+#         yield con
+#     finally:
+#         con.close()
+
+# with dbc() as con:
+#     @trace(handle=con)
+#     def f4(x):
+#         return x ** 4
+
+#     f4(40)
+
+#     cursor = con.cursor()
+#     cursor.execute('SELECT * FROM logtable')
+#     for row in cursor.fetchall():
+#         print(row)
+
+#     print(f4(10))
