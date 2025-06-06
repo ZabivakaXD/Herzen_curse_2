@@ -31,7 +31,7 @@ class CurrencyRatesCRUD:
                 ]
 
             if not data:
-                print("Нет данных для записи")
+                print("Нет данных")
                 return False
 
             sql = """
@@ -39,14 +39,14 @@ class CurrencyRatesCRUD:
                 (char_code, name, value, date)
                 VALUES (:char_code, :name, :value, :date)
             """
-
+            
             self.cursor.executemany(sql, data)
             self.__connection.commit()
-            print(f"Успешно записано {len(data)} записей (именованный стиль)")
+            print(f"Записано данное количество записей {len(data)}")
             return True
 
         except Exception as e:
-            print(f"Ошибка при записи в БД (именованный стиль): {e}")
+            print(e)
             self.__connection.rollback()
             return False
 
@@ -67,8 +67,8 @@ class CurrencyRatesCRUD:
                 """)
             result = self.cursor.fetchall()
             return result if result else []
-        except sqlite3.Error as e:
-            print(f"Ошибка при чтении из БД: {e}")
+        except Exception as e:
+            print(e)
             return []
 
     def update_rates(self):
@@ -77,15 +77,15 @@ class CurrencyRatesCRUD:
                 return False
             return self.create()
         except Exception as e:
-            print(f"Ошибка при обновлении данных: {e}")
+            print(e)
             return False
 
     def close(self):
         try:
             self.__connection.close()
             print("Соединение с БД закрыто")
-        except sqlite3.Error as e:
-            print(f"Ошибка при закрытии соединения: {e}")
+        except Exception as e:
+            print(e)
 
 
 class ViewController:
@@ -96,4 +96,4 @@ class ViewController:
         self.currency_value = currency_rates.values[2]
 
     def __call__(self):
-        return f"{self.currency_name} - {self.currency_date} - {self.currency_value}"
+        return f"{self.currency_name},  {self.currency_date},  {self.currency_value}"

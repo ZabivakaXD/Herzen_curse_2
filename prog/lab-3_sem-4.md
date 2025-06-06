@@ -17,7 +17,7 @@ cur = con.execute("INSERT INTO logtable VALUES (1234566, 'foo', '2', '4')")
 ```
 и записать в нее логи, также "Рядом" с декоратором должна быть утилита, которая отображает содержимое базы данных с логированными данными
 
-[Решение](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/decorator_sem-4.py)
+## [Решение](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/decorator_sem-4.py)
 
 1) 
 ![Img-1](img/lab-3_1.png)

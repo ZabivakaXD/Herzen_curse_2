@@ -46,4 +46,6 @@
 * Использование Jinja2 или альтернативного способа формирования View.
 * Читабельность и структурированность кода.
 
-## Решение:
+## [Решение](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-4)
+
+![Img-1](img/lab-4.png)
