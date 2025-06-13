@@ -13,8 +13,13 @@ class BatchCalculatorContextManager:
 
     def __enter__(self):
         # Открываем файл на чтение
-        self.file = open(self.file_path, 'r', encoding='utf-8')
-        return self.file
+        try:
+            self.file = open(self.file_path, 'r', encoding='utf-8')
+        except OSError as e:
+            print(f"Ошибка открытия файла: {e}")
+        else:
+            return self.file
+    
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         # Закрываем файл
@@ -148,10 +153,13 @@ def cmd_read():
     
     Выводит результат вычисления.
     """
-    numbers = list(map(str, input("Введите числа ")).split(" "))
-    operand = str(input("Введите арифметическая операцию "))
-    tolerance = str(input("Введите точность "))
-    print("Результат выражения ", calculate(numbers, operand, tolerance))
+    try:
+        numbers = list(map(str, input("Введите числа ")).split(" "))
+        operand = str(input("Введите арифметическая операцию "))
+        tolerance = str(input("Введите точность "))
+        print("Результат выражения ", calculate(numbers, operand, tolerance))
+    except Exception as e:
+        print(f"Ошибка: {e}")
     
 def file_read():
     """
@@ -166,24 +174,27 @@ def file_read():
     work_opertand = "+ - * /"
     
     # Обрабатываем файл с помощью менеджера контекста и генератора
-    with BatchCalculatorContextManager(file_path) as file:
-        for expression in expression_generator(file):
-            number = ""
-            numbers = []
-            for char in expression:
-                if char in work_numbers:
-                    number += char
-                elif char == " ":
-                    next
-                elif char in work_opertand:
-                    operand = char
-                    numbers.append(int(number))
-                    number = ""
-                else:
-                    print("Неправильно записано выражение в файле")
-            numbers.append(int(number))
-            result = calculate(numbers, operand, "")
-            print(f"{expression} = {result}")
+    try:
+        with BatchCalculatorContextManager(file_path) as file:
+            for expression in expression_generator(file):
+                number = ""
+                numbers = []
+                for char in expression:
+                    if char in work_numbers:
+                        number += char
+                    elif char == " ":
+                        next
+                    elif char in work_opertand:
+                        operand = char
+                        numbers.append(int(number))
+                        number = ""
+                    else:
+                        print("Неправильно записано выражение в файле")
+                numbers.append(int(number))
+                result = calculate(numbers, operand, "")
+                print(f"{expression} = {result}")
+    except Exception as e:
+        print(f"Ошибка при работе с файлом: {e}")
 
 file_read()
 #cmd_read()

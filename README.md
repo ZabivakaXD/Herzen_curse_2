@@ -30,12 +30,28 @@
 
 [Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-1_sem-3.md)
 
-[Лабораторная работа №2](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Calculate.py)
+[Лабораторная работа №2](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-2_sem-3.md)
 
-[Лабараторная работа №3](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Calculate.py)
+[Лабараторная работа №3](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-3_sem-3.md)
+
+[Лабараторная работа №4](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-4_sem-3.md)
+
+[Лабараторная работа №5](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-5_sem-3.md)
+
+[Лабараторная работа №6](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-6_sem-3.md)
+
+[Лабараторная работа №7](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-7_sem-3.md)
 
 ### 4 семестр
 
 [Лабораторная работа №1](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/Lab-1_sem-4.md)
 
 [Лабораторная работа №2](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-2_sem-4.md)
+
+[Лабораторная работа №3](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-3_sem-4.md)
+
+[Лабораторная работа №4](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-4_sem-4.md)
+
+[Лабораторная работа №5](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-5_sem-4.md)
+
+[Лабораторная работа №7](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-7_sem-4.md)

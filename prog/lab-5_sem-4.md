@@ -48,6 +48,35 @@
 
 Базовый борд с фрагментами приложения: [https://gist.github.com/nzhukov/e55b26d29d8e6422b6e15a51479ec84e](https://gist.github.com/nzhukov/e55b26d29d8e6422b6e15a51479ec84e)
 
-## [Решение](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-4)
+Примерная структура проекта на Flask:
+```
+currency_app/
 
-![Img-1](img/lab-4.png)
+├── app.py               # Главный файл Flask-приложения
+
+├── model.py             # Класс CurrencyRates
+
+├── controller.py        # Логика обработки маршрутов
+
+├── templates/           # Шаблоны Jinja2
+
+│   ├── index.html
+
+│   └── update.html
+
+├── static/              # Статические файлы (если нужно)
+
+├── database.db          # SQLite база данных
+
+└── requirements.txt     # Список зависимостей
+```
+
+## [Решение](https://github.com/ZabivakaXD/Herzen_curse_2/blob/main/prog/lab-5)
+
+![Img-1](img/lab-5-1.png)
+
+![Img-2](img/lab-5-2.png)
+
+![Img-3](img/lab-5-3.png)
+
+![Img-4](img/lab-5-4.png)
